@@ -30,6 +30,18 @@ const PostDetails = ({ postId, onBack }) => {
         </button>
       </div>
 
+      {post.imageUrl && (
+        <div className="mb-5 flex justify-center">
+          <div className="w-full sm:max-w-xl rounded-md overflow-hidden">
+            <img
+              src={`http://localhost:3000/images/posts-pictures/${post.imageUrl}`}
+              alt={post.title}
+              className="w-full object-cover"
+            />
+          </div>
+        </div>
+      )}
+
       <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2 text-center">
         {post.title}
       </h1>

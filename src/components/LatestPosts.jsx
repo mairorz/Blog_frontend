@@ -48,7 +48,7 @@ const LatestPosts = ({ onSelectPost }) => {
 
   return (
     <div className="max-w-5xl w-full mx-auto p-4 space-y-4">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
+      <h1 className="text-3xl font-bold text-white dark:text-gray-100 mb-6 text-center">
         Publicaciones
       </h1>
 
@@ -100,53 +100,66 @@ const LatestPosts = ({ onSelectPost }) => {
             key={post._id}
             className="relative flex flex-col sm:flex-row bg-white dark:bg-gray-800 rounded-lg shadow-sm dark:shadow-none p-6 hover:shadow-md transition-shadow"
           >
-            <button
-              onClick={() => onSelectPost(post._id)}
-              className="absolute top-4 right-4 bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded transition-colors"
-            >
-              Ver detalles
-            </button>
+            {post.imageUrl && (
+              <div className="sm:mr-6 w-full sm:max-w-xs mb-4 sm:mb-0">
+                <img
+                  src={`http://localhost:3000/images/posts-pictures/${post.imageUrl}`}
+                  alt={post.title}
+                  className="rounded-md object-cover w-full h-full"
+                />
+              </div>
+            )}
 
-            <div className="flex-1 min-w-0 pr-12">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-1 break-words">
-                {post.title}
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">
-                <span className="font-medium text-gray-800 dark:text-gray-200">Curso:</span>{' '}
-                {post.course}
-              </p>
-              <p className="text-lg text-gray-700 dark:text-gray-200 mb-4">
-                {post.description.slice(0, 120)}…
-              </p>
-
-              {latestComment ? (
-                <>
-                  <h3 className="text-1xs font-medium text-gray-900 dark:text-gray-100 mb-1">
-                    Comentario más reciente
-                  </h3>
-                  <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3 mb-2 transition-colors">
-                    <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">
-                      {latestComment.name}{' '}
-                      <span className="text-gray-500 dark:text-gray-400 text-xs">
-                        ({new Date(latestComment.createdAt).toLocaleString()})
-                      </span>
-                    </p>
-                    <p className="text-gray-700 dark:text-gray-200 text-sm mt-1">
-                      {latestComment.content.length > 80
-                        ? latestComment.content.slice(0, 80) + '…'
-                        : latestComment.content}
-                    </p>
-                  </div>
-                </>
-              ) : (
-                <p className="text-1xs text-gray-500 dark:text-gray-400 mb-2">
-                  Aún no hay comentarios
+            <div className="flex-1 min-w-0 pr-12 flex flex-col justify-between">
+              <div>
+                <div className="flex items-baseline justify-between mb-1">
+                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 break-words">
+                    {post.title}
+                  </h2>
+                  <p className="text-xl text-gray-500 dark:text-gray-400 ml-2">
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">
+                  <span className="font-medium text-gray-800 dark:text-gray-200">Curso:</span>{' '}
+                  {post.course}
                 </p>
-              )}
+                <p className="text-lg text-gray-700 dark:text-gray-200 mb-4">
+                  {post.description.slice(0, 120)}…
+                </p>
 
-              <p className="text-1xs text-gray-500 dark:text-gray-400">
-                Publicado el {new Date(post.createdAt).toLocaleDateString()}
-              </p>
+                {latestComment ? (
+                  <>
+                    <h3 className="text-1xs font-medium text-gray-900 dark:text-gray-100 mb-1">
+                      Comentario más reciente
+                    </h3>
+                    <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3 mb-2 transition-colors">
+                      <p className="font-medium text-gray-900 dark:text-gray-100 text-sm">
+                        {latestComment.name}{' '}
+                        <span className="text-gray-500 dark:text-gray-400 text-xs">
+                          ({new Date(latestComment.createdAt).toLocaleString()})
+                        </span>
+                      </p>
+                      <p className="text-gray-700 dark:text-gray-200 text-sm mt-1">
+                        {latestComment.content.length > 80
+                          ? latestComment.content.slice(0, 80) + '…'
+                          : latestComment.content}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-1xs text-gray-500 dark:text-gray-400 mb-2">
+                    Aún no hay comentarios
+                  </p>
+                )}
+              </div>
+
+              <button
+                onClick={() => onSelectPost(post._id)}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded transition-colors self-start mt-4 sm:mt-auto"
+              >
+                Ver detalles
+              </button>
             </div>
           </div>
         );
